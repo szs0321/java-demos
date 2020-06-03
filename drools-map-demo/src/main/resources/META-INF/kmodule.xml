@@ -1,0 +1,7 @@
+<kmodule xmlns="http://jboss.org/kie/6.0.0/kmodule">
+    <kbase name="rules" packages="rules">
+        <!--        type="stateless" 代表无状态session 默认为有状态session -->
+        <!--        default="true" 表示默认session  这样kieSession 获取的时候可以不用传name -->
+        <ksession name="test-ks" default="true"/>
+    </kbase>
+</kmodule>

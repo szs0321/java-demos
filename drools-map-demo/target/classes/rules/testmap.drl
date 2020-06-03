@@ -1,0 +1,45 @@
+package rules;
+
+import java.util.Map;
+rule "entry"
+    when
+    then
+    System.out.println("进入规则引擎：");
+end
+
+rule "test1"
+    when
+    Map($result:this["result"])
+    Map(this["姓名"]=="张三")
+    then
+     ((Map)$result).put("姓名","存在姓名为张三的人");
+end
+
+rule "test2"
+    when
+         Map($result:this["result"])
+         Map(this["年龄"] >= 18)
+    then
+    ((Map)$result).put("年龄","年龄大于等于18");
+end
+
+rule "测试存在诊断"
+    when
+      Map($result:this["result"])
+      Map($诊断列表:this["诊断列表"])//诊断列表是一个Set
+     exists (Map(this["诊断编码"]==111) from $诊断列表)
+    then
+   ((Map)$result).put("诊断编码111","存在诊断编码为111的诊断");
+end
+
+
+
+rule "测试诊断多条件"
+    when
+    Map($result:this["result"])
+    Map($诊断列表:this["诊断列表"])//诊断列表是一个Set
+
+    exists ( Map(this["诊断编码"]!=null && this["诊断名称"]==null) from $诊断列表)
+    then
+    ((Map)$result).put("诊断编码222","诊断编码不为空时  诊断名称必须有");
+end
